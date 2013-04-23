@@ -40,7 +40,6 @@ namespace stephenca\FileSpec\Unix;
  * @return string cleaned path.
  *
  */
-
 function canonpath ($path)
 {
     if (!isset($path)) {
@@ -80,7 +79,6 @@ function canonpath ($path)
  * @return string complete path.
  *
  */
-
 function catdir( array $paths  = array() )
 {
   array_push($paths, '');
@@ -126,7 +124,6 @@ function catfile ( array $paths = array() )
  * @return string.
  *
  */
-
 function curdir ()
 {
     return '.';
@@ -143,7 +140,6 @@ function curdir ()
  * @return string
  *
  */
-
 function devnull ()
 {
     return '/dev/null';
@@ -160,12 +156,31 @@ function devnull ()
  * @return string
  *
  */
-
 function rootdir ()
 {
     return '/';
 }
 
+/* 
+ *
+ * list($volume,$directories,$file) = \stephenca\FileSpec\Unix\splitpath( $path );
+ * list($volume,$directories,$file) = \stephenca\FileSpec\Unix\splitpath( $path,
+ *                                                    $no_file );
+ * Splits a path into volume, directory, and filename portions. On systems with
+ * no concept of volume, returns '' for volume. For systems with no syntax
+ * differentiating filenames from directories, assumes that the last file is a
+ * path unless $no_file is true or a trailing separator or /. or /.. is present.
+ * On Unix this means that $no_file true makes this return ( '', $path, '' ).
+ *
+ * The directory portion may or may not be returned with a trailing '/'.
+ *
+ * The results can be passed to "catpath()" to get back a path equivalent to
+ * (usually identical to) the original path.
+ *
+ * @param String $path - string containing path name to split.
+ * @param Bool $no_file (optional) - if true, suppresses assumption that last file is a path
+ * @return Array
+ */
 function splitpath ($path,$nofile = 0)
 {
     $volume = '';
